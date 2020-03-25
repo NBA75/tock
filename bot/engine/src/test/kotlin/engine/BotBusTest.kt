@@ -113,6 +113,16 @@ class BotBusTest : BotEngineTest() {
     }
 
     @Test
+    fun `switchStory switch story and reset step if same story def`() {
+        assertEquals(test, bus.story.definition)
+        bus.step = StepTest.s1
+        bus.switchStory(test)
+        assertEquals(test, bus.story.definition)
+        assertNull(bus.step)
+        assertEquals(test, bus.dialog.stories.last().definition)
+    }
+
+    @Test
     fun `switchStory switch story and does not keep the step if not relevant`() {
         assertEquals(test, bus.story.definition)
         bus.step = StepTest.s1

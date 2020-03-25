@@ -426,7 +426,7 @@ interface BotBus : Bus<BotBus> {
      * Switches the context to the specified story definition (start a new [Story]).
      */
     fun switchStory(storyDefinition: StoryDefinition, starterIntent: Intent = storyDefinition.mainIntent()) {
-        story = Story(storyDefinition, starterIntent, story.step)
+        story = Story(storyDefinition, starterIntent, story.takeUnless { it.definition == storyDefinition }?.step)
         dialog.state.currentIntent = starterIntent
         setBusContextValue(SWITCH_STORY_BUS_KEY, true)
     }
